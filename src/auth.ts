@@ -281,6 +281,17 @@ export async function accessToken(
   }
   const next = await refresh(baseUrl, profile);
   if (!next) {
+    // The server retires a refresh token once it is spent. Another process
+    // (a parallel `scribetoany` run) may have spent ours and saved the new
+    // pair: use that instead of signing out.
+    const latest = await loadProfile(baseUrl);
+    if (
+      latest &&
+      latest.refreshToken !== profile.refreshToken &&
+      latest.expiresAt - REFRESH_MARGIN_MS > Date.now()
+    ) {
+      return latest.accessToken;
+    }
     throw new CliError(
       'Your sign-in has expired. Run `scribetoany auth login`.',
       EXIT.AUTH,
