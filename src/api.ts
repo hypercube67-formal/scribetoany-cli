@@ -11,6 +11,16 @@ export interface Job {
   error: string | null;
   language: string | null;
   durationSec: number | null;
+  /**
+   * Set when only the start of the file was transcribed: it is longer than
+   * the plan's per-file limit. `message` says so in words. Absent on servers
+   * from before 0.1.6.
+   */
+  planLimit?: {
+    transcribedSec: number;
+    fullDurationSec: number;
+    message: string;
+  } | null;
   sourceType: string | null;
   createdAt: string;
   url: string;

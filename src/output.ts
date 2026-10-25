@@ -10,6 +10,11 @@ export function log(message: string): void {
   if (!quiet) process.stderr.write(`${message}\n`);
 }
 
+/** Shown even with --quiet: the user must know about it. */
+export function warn(message: string): void {
+  process.stderr.write(`Warning: ${message}\n`);
+}
+
 export function printJson(value: unknown): void {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
 }

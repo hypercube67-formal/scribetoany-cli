@@ -1,6 +1,6 @@
 {
   "name": "scribetoany",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Transcribe audio and video files into text, SRT or VTT subtitles from the command line, with ScribeToAny.",
   "keywords": [
     "transcription",

@@ -11,6 +11,7 @@ import {
   log,
   print,
   printJson,
+  warn,
 } from './output.ts';
 import { checkFile, uploadFile } from './upload.ts';
 
@@ -165,6 +166,7 @@ async function writeResult(
     await writeFile(path, body);
     log(`Saved ${path}`);
   }
+  if (job.planLimit) warn(`${job.name}: ${job.planLimit.message}`);
   return path;
 }
 
@@ -182,6 +184,7 @@ const jobSummary = (job: Job, output: string | null) => ({
   status: job.status,
   language: job.language,
   durationSec: job.durationSec,
+  planLimit: job.planLimit ?? null,
   url: job.url,
   output: output === '-' ? null : output,
 });
@@ -317,7 +320,7 @@ export async function list(
         j.status.padEnd(12),
         formatDuration(j.durationSec).padStart(8),
         j.createdAt.slice(0, 10),
-        j.name,
+        j.planLimit ? `${j.name} (cut at plan limit)` : j.name,
       ].join('  ')
     );
   }
