@@ -11,7 +11,7 @@ scribetoany auth login        # opens the browser once
 scribetoany transcribe meeting.m4a --format srt --speakers
 ```
 
-Agent skill: `npx skills add hypercube67-formal/scribetoany-skills --skill scribetoany`.
+Agent skill: `npx skills add scribetoany/skills --skill scribetoany`.
 
 ## Commands
 
